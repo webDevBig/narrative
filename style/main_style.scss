@@ -490,7 +490,7 @@ header {
             }
         }
     }
-
+    
     .player_section {
         flex-direction: column;
         
@@ -514,6 +514,11 @@ header {
 
         .volume_box {
             display: none;
+        }
+        .volume_text {
+            img {
+                margin: 0 0 0 3px;
+            }
         }
     }
 

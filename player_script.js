@@ -19,16 +19,24 @@ function create_player() {
 
 	const volume_text = document.createElement("p");
 	volume_text.setAttribute('class', 'volume_text');
+	const volume_textM = document.createElement("p");
+	volume_textM.setAttribute('class', 'volume_text');
 
 	const imgV = document.createElement("img");
 	imgV.setAttribute('src', 'img/Logo-Narrativ-Letter.svg');
 	imgV.setAttribute('alt', '');
+
+	const imgVM = document.createElement("img");
+	imgVM.setAttribute('src', 'img/Logo-Narrativ-Letter.svg');
+	imgVM.setAttribute('alt', '');
+	
 	volume_text.append('Powered by', imgV)
+	volume_textM.append('Powered by', imgVM)
 
 	const info_box = document.createElement("div");
 	info_box.setAttribute('class', 'info_box');
 
-	info_box.append(current_title, volume_text)
+	info_box.append(current_title, volume_textM)
 	title_box.append(img, info_box);
 
 
