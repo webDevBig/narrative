@@ -185,6 +185,7 @@ header img {
 }
 .player_section .volume_text img {
   max-width: 65px;
+  margin: 0 0 0 4px;
 }
 
 .controler_box {
