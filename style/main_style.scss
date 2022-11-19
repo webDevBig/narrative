@@ -4,8 +4,10 @@ $color-title:#DD2747;
 
 
 $--narrativ-color-progress:#4169E1;
+$--narrativ-color-progress-hover:#5B88FF;
 $--narrativ-color-fill:#90AEFF;
 $--narrativ-color-text:#414141;
+$--narrativ-color-text-hover:#606060;
 $--narrativ-font-family:'Roboto';
 $--narrativ-font-size:12px;
 
@@ -187,6 +189,10 @@ header {
             font-weight: 500;
             font-size: 20px;
             line-height: 23px;
+            cursor: default;
+            &:hover{
+                color: $--narrativ-color-progress-hover;
+            }
         }
     }
 
@@ -195,20 +201,19 @@ header {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
     }
+
     .volume_text {
         font-family: $--narrativ-font-family, sans-serif;
-        font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 19px;
         color: #999999;
-        margin: 0 4px 0 0;
 
         img {
             max-width: 65px;
-            margin: 0 0 0 4px;
+            // margin: 0 0 0 4px;
         }
     }
 
@@ -230,12 +235,18 @@ header {
         font-size: 16px;
         line-height: 19px;
         color: $--narrativ-color-text;
+        transition: all .2s;
+        cursor: pointer;
+
+        &:hover {
+            color: $--narrativ-color-text-hover;
+        }
     }
 
     .play_btn {
         width: 51px;
         height: 51px;
-        background: $--narrativ-color-progress;
+        background-color: $--narrativ-color-progress;
         border-radius: 33.275px;
         border: none;
         outline: none;
@@ -245,9 +256,14 @@ header {
         background-position: center;
         background-repeat: no-repeat;
         background-size: 16px;
+        transition: all .2s;
 
         &.pause {
             background-image: url("../img/pause.svg");
+        }
+
+        &:hover {
+            background-color: #5B88FF;
         }
     }
 
@@ -266,6 +282,11 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: all .2s;
+
+        &:hover {
+            background-image: url('../img/return-hover.svg');
+        }
 
         &::after {
             content: '15';
@@ -275,6 +296,11 @@ header {
             font-weight: bold;
             padding: 6px 0 0;
             font-family: $font-family1;
+            transition: all .2s;
+        }
+
+        &:hover::after {
+            color: $--narrativ-color-text-hover;
         }
 
         &.return_forward {
@@ -294,9 +320,25 @@ header {
     display: flex;
     align-items: center;
 
-    img {
+    .volume_icon {
         margin: 0 11px 0 0;
         max-width: 17px;
+        width: 17px;
+        height: 18px;
+        background-image: url("../img/volume.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 17px;
+        &.mute{
+            background-image: url("../img/mute.svg");
+            &:hover {
+                background-image: url("../img/mute-hover.svg");
+            }
+        }
+
+        &:hover {
+            background-image: url("../img/volume-hover.svg");
+        }
     }
 
     input {
@@ -308,7 +350,6 @@ header {
 
     input[type="range"] {
         -webkit-appearance: none;
-        margin-right: 15px;
         width: 143px;
         height: 4px;
         background: $--narrativ-color-fill;
@@ -316,6 +357,29 @@ header {
         background-image: linear-gradient($--narrativ-color-progress, $--narrativ-color-progress);
         background-size: 70% 100%;
         background-repeat: no-repeat;
+        // transition: background .2s ease-in-out;
+        &.mute{
+            background-size: 0% 100%!important;
+        }
+
+        &:hover {
+            background-image: linear-gradient($--narrativ-color-progress-hover, $--narrativ-color-progress-hover);
+
+            &::-webkit-slider-thumb {
+                background: $--narrativ-color-progress-hover;
+            }
+
+            &::-moz-range-thumb {
+                background: $--narrativ-color-progress-hover;
+            }
+
+            &::-ms-thumb {
+                background: $--narrativ-color-progress-hover;
+            }
+
+        }
+
+
     }
 
     /* Input Thumb */
@@ -326,7 +390,7 @@ header {
         border-radius: 50%;
         background: $--narrativ-color-progress;
         cursor: pointer;
-        transition: background .3s ease-in-out;
+        // transition: background .2s ease-in-out;
     }
 
     input[type="range"]::-moz-range-thumb {
@@ -336,7 +400,7 @@ header {
         border-radius: 50%;
         background: $--narrativ-color-progress;
         cursor: pointer;
-        transition: background .3s ease-in-out;
+        // transition: background .2s ease-in-out;
     }
 
     input[type="range"]::-ms-thumb {
@@ -346,7 +410,7 @@ header {
         border-radius: 50%;
         background: $--narrativ-color-progress;
         cursor: pointer;
-        transition: background .3s ease-in-out;
+        // transition: background .2s ease-in-out;
     }
 
     /* Input Track */
@@ -393,6 +457,7 @@ header {
         color: $--narrativ-color-text;
         font-family: $--narrativ-font-family, sans-serif;
         min-width: 30px;
+        cursor: default;
     }
 
     .timeline {
@@ -404,6 +469,16 @@ header {
         margin: 0 8px;
         border-radius: 16px;
 
+        &:hover {
+            .progress {
+                background: $--narrativ-color-progress-hover;
+
+                &::after {
+                    background-color: $--narrativ-color-progress-hover;
+                }
+            }
+        }
+
 
         .progress {
             background: $--narrativ-color-progress;
@@ -413,7 +488,7 @@ header {
             position: relative;
             border-radius: 16px 0 0 16px;
 
-            &.show::after {
+            &::after {
                 content: "";
                 width: 12px;
                 height: 12px;
@@ -491,10 +566,10 @@ header {
             }
         }
     }
-    
+
     .player_section {
         flex-direction: column;
-        
+
 
         .title_box {
             max-width: 100%;
@@ -507,6 +582,7 @@ header {
 
         .info_box {
             flex-direction: column-reverse;
+
             .volume_text {
                 display: block;
                 margin: 0 0 8px;
@@ -516,6 +592,7 @@ header {
         .volume_box {
             display: none;
         }
+
         .volume_text {
             img {
                 margin: 0 0 0 3px;
@@ -575,11 +652,12 @@ header {
     .article_box {
         @include contentView();
     }
-    .player_section{
+
+    .player_section {
         padding: 16px 16px 20px;
     }
-    #player_here
-    {
+
+    #player_here {
         padding: 0 24px;
     }
 

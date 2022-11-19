@@ -29,7 +29,7 @@ function create_player() {
 	const imgVM = document.createElement("img");
 	imgVM.setAttribute('src', 'img/Logo-Narrativ-Letter.svg');
 	imgVM.setAttribute('alt', '');
-	
+
 	volume_text.append('Powered by', imgV)
 	volume_textM.append('Powered by', imgVM)
 
@@ -57,7 +57,6 @@ function create_player() {
 	const return_back = document.createElement("div");
 	return_back.setAttribute("class", "return return_back");
 	return_back.setAttribute("id", "return_back")
-	// return_back.setAttribute("onclick", "return_backAudioFile();")
 
 	// play
 	const play_btn = document.createElement("div");
@@ -68,7 +67,7 @@ function create_player() {
 	const return_forward = document.createElement("div");
 	return_forward.setAttribute("class", "return return_forward");
 	return_forward.setAttribute("id", "return_forward")
-	// return_forward.setAttribute("onclick", "return_forwardAudioFile();")
+
 	controler_box.append(speed, return_back, play_btn, return_forward)
 
 	// ******** finish controler box
@@ -78,9 +77,10 @@ function create_player() {
 	audio_player.setAttribute("class", "audio_player");
 	audio_player.setAttribute("id", "player");
 
-	const audio = document.createElement("div");
+	const audio = document.createElement("audio");
 	audio.setAttribute("id", "audio");
-	audio.setAttribute("src", "https://521dimensions.com/song/FirstSnow-Emancipator.mp3");
+	audio.setAttribute("autoplay", "true");
+	audio.setAttribute("src", "https://narrativ-audio-bucket.s3.amazonaws.com/ad_1.mp3");
 
 	const durationTime = document.createElement("span");
 	durationTime.setAttribute("id", "durationTime")
@@ -107,8 +107,8 @@ function create_player() {
 	const volume = document.createElement("div");
 	volume.setAttribute("class", "volume")
 
-	const volumeImg = document.createElement("img");
-	volumeImg.setAttribute("src", "img/volume.svg")
+	const volumeIcon = document.createElement("div");
+	volumeIcon.setAttribute("class", "volume_icon")
 
 	const volumeInput = document.createElement("input");
 	volumeInput.setAttribute("type", "range")
@@ -117,7 +117,7 @@ function create_player() {
 	volumeInput.setAttribute("max", "100")
 	volumeInput.setAttribute("step", "1")
 
-	volume.append(volumeImg, volumeInput)
+	volume.append(volumeIcon, volumeInput)
 	volume_box.append(volume, volume_text)
 
 	player_box.append(controler_box, audio_player)
@@ -146,6 +146,7 @@ function play_music() {
 		},
 		false
 	);
+
 
 	//click on timeline to skip around
 	const timeline = audioPlayer.querySelector(".timeline");
@@ -182,6 +183,7 @@ function play_music() {
 		},
 		false
 	);
+
 
 
 	//turn 128 seconds into 2:08
@@ -232,10 +234,34 @@ function play_music() {
 
 
 	//* sound volume control
+	const volume_icon = document.querySelector(".volume_icon");
 	const volume = document.querySelector(".volume input");
 	volume.addEventListener("change", () => {
 		audio.volume = volume.value / 100;
+		if (audio.volume == 0) {
+			volume_icon.classList.add("mute")
+		} else {
+			volume_icon.classList.remove("mute")
+		}
 	});
+
+	volume_icon.addEventListener("click", volume_iconClick, false);
+
+	function volume_iconClick() {
+		var value = volume.value
+		console.log(value)
+		if (!volume_icon.classList.contains('mute')) {
+			volume_icon.classList.add("mute")
+			audio.volume = 0;
+			volume.value = 0;
+			volume.classList.add('mute')
+		} else {
+			audio.volume = volume.value / 100;
+			volume_icon.classList.remove("mute")
+			volume.classList.remove('mute')
+			volume.value = value
+		}
+	}
 
 	const rangeInputs = document.querySelector('.volume input[type="range"]');
 
@@ -259,33 +285,8 @@ function play_music() {
 const timeoutObject = setTimeout(create_player, 5000);
 const timeoutMusic = setTimeout(play_music, 5000);
 
-function f() {
-	var sticky = {
-		sticky_after: 200,
-		init: function() {
-		  this.header = document.getElementById('player_here');
-		  this.clone = this.header.cloneNode(true);
-		  this.clone.classList.add("clone");
-		  document.body.append(this.clone);
-		  this.scroll();
-		  this.events();
-		},
-	  
-		scroll: function() {
-		  if(window.scrollY > this.sticky_after) {
-			document.body.classList.add("down");
-		  }
-		  else {
-			document.body.classList.remove("down");
-		  }
-		},
-	  
-		events: function() {
-		  window.addEventListener("scroll", this.scroll.bind(this));
-		}
-	  };
-	  
-	  document.addEventListener("DOMContentLoaded", sticky.init.bind(sticky));
-}
-
-const timeoutMusic2 = setTimeout(f, 2000);
+// var source = "https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3"
+// var audio = new Audio();
+// // no event listener needed here
+// audio.src = source;
+// audio.autoplay = true;
