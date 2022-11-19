@@ -244,6 +244,7 @@ header img {
   font-size: 10px;
   font-weight: bold;
   padding: 6px 0 0;
+  font-family: "Roboto";
 }
 .controler_box .return.return_forward {
   transform: scaleX(-1);
