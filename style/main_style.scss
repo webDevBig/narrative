@@ -492,6 +492,7 @@ header {
 
     .player_section {
         flex-direction: column;
+        
 
         .title_box {
             max-width: 100%;
@@ -566,6 +567,13 @@ header {
     .main_img,
     .article_box {
         @include contentView();
+    }
+    .player_section{
+        padding: 16px 16px 20px;
+    }
+    #player_here
+    {
+        padding: 0 24px;
     }
 
     .article_box {
