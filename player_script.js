@@ -50,7 +50,32 @@ function create_player() {
 
 	const speed = document.createElement("div");
 	speed.setAttribute("class", "speed")
-	speed.textContent = '1x';
+
+	const speedValue = document.createElement("p");
+	speedValue.setAttribute("class", "speedValue")
+	speedValue.setAttribute("id", "openSpeedPopUp")
+	speedValue.textContent = '1x';
+	// 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2
+
+
+	// create list of speed value
+	const speedPop_Up = document.createElement("div");
+	speedPop_Up.setAttribute("class", "speedPop_Up")
+	var directory = ['0.5x', '0.75x', '1x', '1.25x', '1.5x', '1.75x', '2x'];
+
+	for (var i = 0; i <= directory.length-1; i++) {
+		const speedValueItem = document.createElement("a");
+		speedValueItem.setAttribute("class", "speedValueItem speedValue")
+		speedValueItem.textContent = directory[i];
+		speedPop_Up.append(speedValueItem)
+	}
+
+	speed.append(speedValue, speedPop_Up)
+
+
+
+
+	// speedPop_Up.append(speedValueItem)
 
 	// add btn's
 	// return_back
@@ -80,7 +105,7 @@ function create_player() {
 	const audio = document.createElement("audio");
 	audio.setAttribute("id", "audio");
 	audio.setAttribute("autoplay", "true");
-	audio.setAttribute("src", "https://narrativ-audio-bucket.s3.amazonaws.com/ad_1.mp3");
+	// audio.setAttribute("src", "https://narrativ-audio-bucket.s3.amazonaws.com/ad_1.mp3");
 
 	const durationTime = document.createElement("span");
 	durationTime.setAttribute("id", "durationTime")
@@ -129,12 +154,36 @@ function create_player() {
 
 
 function play_music() {
-
-
 	const audioPlayer = document.querySelector(".audio_player");
 	const audio = new Audio(
-		"https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3"
+		// "https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3"
 	);
+
+	const songs = [
+		'Juice WRLD Ft Benny Blanco - Real Shit',
+		'Lil Baby, Lil Durk ft Rodwave - Rich Off Pain',
+		'Polo G – I Know'
+	];
+	let songIndex = 1;
+	loadSong(songs[songIndex]);
+
+	function loadSong(song) {
+		audio.src = `music/${song}.mp3`;
+	}
+
+	function nextSong() {
+		songIndex++;
+
+		if (songIndex > songs.length - 1) {
+			songIndex = 0;
+		}
+
+		loadSong(songs[songIndex]);
+		audio.play();
+	}
+	audio.addEventListener('ended', nextSong);
+
+
 
 	audio.addEventListener(
 		"loadeddata",
@@ -204,7 +253,6 @@ function play_music() {
 		audio.currentTime = audio.currentTime + 15;
 		const progressBar = audioPlayer.querySelector(".progress");
 		progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
-		document.querySelector("#currentTime").textContent = getTimeCodeFromNum(audio.currentTime);
 
 
 		timeline.addEventListener("click", e => {
@@ -220,8 +268,6 @@ function play_music() {
 		audio.currentTime = audio.currentTime - 15;
 		const progressBar = audioPlayer.querySelector(".progress");
 		progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
-		document.querySelector("#currentTime").textContent = getTimeCodeFromNum(audio.currentTime);
-
 
 		timeline.addEventListener("click", e => {
 			const timelineWidth = window.getComputedStyle(timeline).width;
@@ -236,32 +282,35 @@ function play_music() {
 	//* sound volume control
 	const volume_icon = document.querySelector(".volume_icon");
 	const volume = document.querySelector(".volume input");
-	volume.addEventListener("change", () => {
-		audio.volume = volume.value / 100;
-		if (audio.volume == 0) {
-			volume_icon.classList.add("mute")
-		} else {
-			volume_icon.classList.remove("mute")
-		}
-	});
+
 
 	volume_icon.addEventListener("click", volume_iconClick, false);
 
 	function volume_iconClick() {
-		var value = volume.value
-		console.log(value)
+		// var value = volume.value
+		// console.log(value)
 		if (!volume_icon.classList.contains('mute')) {
 			volume_icon.classList.add("mute")
-			audio.volume = 0;
-			volume.value = 0;
+			audio.muted = true;
 			volume.classList.add('mute')
 		} else {
-			audio.volume = volume.value / 100;
+
 			volume_icon.classList.remove("mute")
 			volume.classList.remove('mute')
-			volume.value = value
+			audio.muted = false
 		}
 	}
+	volume.addEventListener("change", () => {
+		audio.volume = volume.value / 100;
+		audio.muted = false
+		if (audio.volume == 0) {
+			volume_icon.classList.add("mute")
+			volume.classList.add('mute')
+		} else {
+			volume_icon.classList.remove("mute")
+			volume.classList.remove('mute')
+		}
+	});
 
 	const rangeInputs = document.querySelector('.volume input[type="range"]');
 
@@ -280,13 +329,36 @@ function play_music() {
 
 	rangeInputs.addEventListener("input", handleInputChange);
 
+
+
+	const speepPopUP = document.querySelector("#openSpeedPopUp");
+
+
+speepPopUP.addEventListener("click", speepPopUPClick, false);
+
+function speepPopUPClick() {
+	this.parentNode.querySelector(".speedPop_Up").classList.toggle('show')
 }
 
-const timeoutObject = setTimeout(create_player, 5000);
-const timeoutMusic = setTimeout(play_music, 5000);
 
-// var source = "https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3"
-// var audio = new Audio();
-// // no event listener needed here
-// audio.src = source;
-// audio.autoplay = true;
+var speedValue = document.querySelectorAll('.speedValueItem');
+[].forEach.call(speedValue, function (el) {
+	el.onclick = function (e) {
+		for (var i = 0; i < speedValue.length; i++) {
+			speedValue[i].classList.remove('active');
+
+		}
+		el.classList.toggle('active');
+		speepPopUP.textContent = el.innerHTML;
+		audio.playbackRate = parseFloat(el.innerHTML);
+		document.querySelector(".speedPop_Up").classList.toggle('show')
+	}
+});
+
+}
+
+const timeoutObject = setTimeout(create_player, 1000);
+const timeoutMusic = setTimeout(play_music, 1000);
+
+
+

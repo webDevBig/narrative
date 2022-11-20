@@ -7,6 +7,7 @@
 body {
   color: #2E2E2E;
   padding: 0 0 48px;
+  overflow-x: hidden;
 }
 
 .row {
@@ -189,6 +190,44 @@ header img {
   max-width: 65px;
 }
 
+.speed {
+  position: absolute;
+  left: 0;
+  transition: all 0.2s;
+}
+.speed .speedValue {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #414141;
+  cursor: pointer;
+  margin: 0 5px;
+}
+.speed .speedValue:hover {
+  color: #606060;
+}
+.speed .speedValue.active {
+  color: #2E2E2E;
+}
+.speed .speedPop_Up {
+  background: #F5F5F5;
+  box-shadow: 4px 0px 15px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 16px 11px;
+  visibility: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 120%;
+  left: -130px;
+  z-index: 10;
+}
+.speed .speedPop_Up.show {
+  visibility: visible;
+}
+
 .controler_box {
   width: 100%;
   display: flex;
@@ -196,20 +235,6 @@ header img {
   align-items: center;
   position: relative;
   margin: 0 0 20px;
-}
-.controler_box .speed {
-  position: absolute;
-  left: 0;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #414141;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-.controler_box .speed:hover {
-  color: #606060;
 }
 .controler_box .play_btn {
   width: 51px;
@@ -281,16 +306,18 @@ header img {
 }
 .volume .volume_icon {
   margin: 0 11px 0 0;
-  max-width: 17px;
-  width: 17px;
+  max-width: 20px;
+  width: 20px;
   height: 18px;
   background-image: url("../img/volume.svg");
-  background-position: center;
+  background-position: 0% 50%;
   background-repeat: no-repeat;
   background-size: 17px;
+  transition: all 0.2s;
 }
 .volume .volume_icon.mute {
   background-image: url("../img/mute.svg");
+  background-size: 20px;
 }
 .volume .volume_icon.mute:hover {
   background-image: url("../img/mute-hover.svg");
@@ -316,6 +343,18 @@ header img {
 }
 .volume input[type=range].mute {
   background-size: 0% 100% !important;
+}
+.volume input[type=range].mute::-webkit-slider-thumb {
+  position: absolute;
+  top: -6px;
+}
+.volume input[type=range].mute::-moz-range-thumb {
+  position: absolute;
+  top: -6px;
+}
+.volume input[type=range].mute::-ms-thumb {
+  position: absolute;
+  top: -6px;
 }
 .volume input[type=range]:hover {
   background-image: linear-gradient(#5B88FF, #5B88FF);
@@ -358,18 +397,21 @@ header img {
   box-shadow: none;
   border: none;
   background: transparent;
+  position: relative;
 }
 .volume input[type=range]::-moz-range-track {
   -webkit-appearance: none;
   box-shadow: none;
   border: none;
   background: transparent;
+  position: relative;
 }
 .volume input[type=range]::-ms-track {
   -webkit-appearance: none;
   box-shadow: none;
   border: none;
   background: transparent;
+  position: relative;
 }
 
 .audio_player {

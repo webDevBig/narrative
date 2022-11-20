@@ -27,6 +27,7 @@ $--narrativ-font-size:12px;
 body {
     color: $body-text-color;
     padding: 0 0 48px;
+    overflow-x: hidden;
 }
 
 .row {
@@ -190,7 +191,8 @@ header {
             font-size: 20px;
             line-height: 23px;
             cursor: default;
-            &:hover{
+
+            &:hover {
                 color: $--narrativ-color-progress-hover;
             }
         }
@@ -219,6 +221,53 @@ header {
 
 }
 
+.speed {
+    position: absolute;
+    left: 0;
+    transition: all .2s;
+
+    .speedValue {
+        font-family: $--narrativ-font-family, sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: $--narrativ-color-text;
+        cursor: pointer;
+        margin: 0 5px;
+
+        &:hover {
+            color: $--narrativ-color-text-hover;
+        }
+
+        &.active {
+            color: $body-text-color;
+        }
+    }
+
+    .speedPop_Up {
+        background: #F5F5F5;
+        box-shadow: 4px 0px 15px rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+        padding: 16px 11px;
+        visibility: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        bottom: 120%;
+        left: -130px;
+        z-index: 10;
+
+        &.show {
+            visibility: visible;
+        }
+    }
+
+
+
+
+}
+
 .controler_box {
     width: 100%;
     display: flex;
@@ -226,22 +275,6 @@ header {
     align-items: center;
     position: relative;
     margin: 0 0 20px;
-
-    .speed {
-        position: absolute;
-        left: 0;
-        font-family: $--narrativ-font-family, sans-serif;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
-        color: $--narrativ-color-text;
-        transition: all .2s;
-        cursor: pointer;
-
-        &:hover {
-            color: $--narrativ-color-text-hover;
-        }
-    }
 
     .play_btn {
         width: 51px;
@@ -322,15 +355,19 @@ header {
 
     .volume_icon {
         margin: 0 11px 0 0;
-        max-width: 17px;
-        width: 17px;
+        max-width: 20px;
+        width: 20px;
         height: 18px;
         background-image: url("../img/volume.svg");
-        background-position: center;
+        background-position: 0% 50%;
         background-repeat: no-repeat;
         background-size: 17px;
-        &.mute{
+        transition: all .2s;
+
+        &.mute {
             background-image: url("../img/mute.svg");
+            background-size: 20px;
+
             &:hover {
                 background-image: url("../img/mute-hover.svg");
             }
@@ -357,9 +394,25 @@ header {
         background-image: linear-gradient($--narrativ-color-progress, $--narrativ-color-progress);
         background-size: 70% 100%;
         background-repeat: no-repeat;
+
         // transition: background .2s ease-in-out;
-        &.mute{
-            background-size: 0% 100%!important;
+        &.mute {
+            background-size: 0% 100% !important;
+
+            &::-webkit-slider-thumb {
+                position: absolute;
+                top: -6px;
+            }
+
+            &::-moz-range-thumb {
+                position: absolute;
+                top: -6px;
+            }
+
+            &::-ms-thumb {
+                position: absolute;
+                top: -6px;
+            }
         }
 
         &:hover {
@@ -419,6 +472,7 @@ header {
         box-shadow: none;
         border: none;
         background: transparent;
+        position: relative;
     }
 
     input[type=range]::-moz-range-track {
@@ -426,6 +480,7 @@ header {
         box-shadow: none;
         border: none;
         background: transparent;
+        position: relative;
     }
 
     input[type="range"]::-ms-track {
@@ -433,6 +488,7 @@ header {
         box-shadow: none;
         border: none;
         background: transparent;
+        position: relative;
     }
 
 }
