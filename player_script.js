@@ -3,6 +3,9 @@ function create_player() {
 	const player_section = document.createElement("div");
 	player_section.setAttribute('class', 'player_section')
 
+	// add arrow
+	const arrow = document.createElement("div");
+	arrow.setAttribute('class', 'arrow');
 
 	// add title box
 	const title_box = document.createElement("div");
@@ -63,7 +66,7 @@ function create_player() {
 	speedPop_Up.setAttribute("class", "speedPop_Up")
 	var directory = ['0.5x', '0.75x', '1x', '1.25x', '1.5x', '1.75x', '2x'];
 
-	for (var i = 0; i <= directory.length-1; i++) {
+	for (var i = 0; i <= directory.length - 1; i++) {
 		const speedValueItem = document.createElement("a");
 		speedValueItem.setAttribute("class", "speedValueItem speedValue")
 		speedValueItem.textContent = directory[i];
@@ -105,7 +108,6 @@ function create_player() {
 	const audio = document.createElement("audio");
 	audio.setAttribute("id", "audio");
 	audio.setAttribute("autoplay", "true");
-	// audio.setAttribute("src", "https://narrativ-audio-bucket.s3.amazonaws.com/ad_1.mp3");
 
 	const durationTime = document.createElement("span");
 	durationTime.setAttribute("id", "durationTime")
@@ -147,7 +149,7 @@ function create_player() {
 
 	player_box.append(controler_box, audio_player)
 
-	player_section.append(title_box, player_box, volume_box)
+	player_section.append(title_box, player_box, volume_box, arrow)
 
 	player_container.append(player_section)
 }
@@ -289,7 +291,7 @@ function play_music() {
 	volume_icon.addEventListener("click", volume_iconClick, false);
 
 	function volume_iconClick() {
-		
+
 		if (!volume_icon.classList.contains('mute')) {
 			volume_icon.classList.add("mute")
 			audio.muted = true;
@@ -335,31 +337,39 @@ function play_music() {
 	const speepPopUP = document.querySelector("#openSpeedPopUp");
 
 
-speepPopUP.addEventListener("click", speepPopUPClick, false);
+	speepPopUP.addEventListener("click", speepPopUPClick, false);
 
-function speepPopUPClick() {
-	this.parentNode.querySelector(".speedPop_Up").classList.toggle('show')
-}
-
-
-var speedValue = document.querySelectorAll('.speedValueItem');
-[].forEach.call(speedValue, function (el) {
-	el.onclick = function (e) {
-		for (var i = 0; i < speedValue.length; i++) {
-			speedValue[i].classList.remove('active');
-
-		}
-		el.classList.toggle('active');
-		speepPopUP.textContent = el.innerHTML;
-		audio.playbackRate = parseFloat(el.innerHTML);
-		document.querySelector(".speedPop_Up").classList.toggle('show')
+	function speepPopUPClick() {
+		this.parentNode.querySelector(".speedPop_Up").classList.toggle('show')
 	}
-});
+
+
+	var speedValue = document.querySelectorAll('.speedValueItem');
+	[].forEach.call(speedValue, function (el) {
+		el.onclick = function (e) {
+			for (var i = 0; i < speedValue.length; i++) {
+				speedValue[i].classList.remove('active');
+
+			}
+			el.classList.toggle('active');
+			speepPopUP.textContent = el.innerHTML;
+			audio.playbackRate = parseFloat(el.innerHTML);
+			document.querySelector(".speedPop_Up").classList.toggle('show')
+		}
+	});
+
+
+	const accordion = document.querySelector(".arrow");
+	const player_section = document.querySelector(".player_section");
+
+	accordion.addEventListener("click", accordionClick, false);
+
+	function accordionClick() {
+		player_section.classList.toggle('resize')
+		this.classList.toggle('colapse')
+	}
 
 }
 
 const timeoutObject = setTimeout(create_player, 1000);
 const timeoutMusic = setTimeout(play_music, 1000);
-
-
-
