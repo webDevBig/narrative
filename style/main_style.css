@@ -8,6 +8,7 @@ body {
   color: #2E2E2E;
   padding: 0 0 48px;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .row {
@@ -188,6 +189,7 @@ header img {
 }
 .player_section .volume_text img {
   max-width: 65px;
+  margin: 0 0 0 4px;
 }
 
 .speed {
@@ -509,10 +511,14 @@ header img {
     width: 100%;
   }
   .player_section .title_box .current_title {
-    max-width: inherit;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .player_section .info_box {
     flex-direction: column-reverse;
+    max-width: calc(100% - 96px);
   }
   .player_section .info_box .volume_text {
     display: block;
@@ -553,6 +559,9 @@ header img {
   }
   .audio_player #currentTime {
     right: 0;
+  }
+  .speed .speedPop_Up {
+    left: -33px;
   }
 }
 @media all and (max-width: 500px) {

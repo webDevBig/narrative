@@ -15,7 +15,7 @@ function create_player() {
 
 	const current_title = document.createElement("p");
 	current_title.setAttribute('class', 'current_title');
-	current_title.textContent = "TOP 10 BINGE-WORTHY SERIES"
+	// current_title.textContent = "TOP 10 BINGE-WORTHY SERIES"
 
 	const volume_text = document.createElement("p");
 	volume_text.setAttribute('class', 'volume_text');
@@ -155,6 +155,7 @@ function create_player() {
 
 function play_music() {
 	const audioPlayer = document.querySelector(".audio_player");
+	const current_title = document.querySelector('.current_title')
 	const audio = new Audio(
 		// "https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3"
 	);
@@ -169,6 +170,7 @@ function play_music() {
 
 	function loadSong(song) {
 		audio.src = `music/${song}.mp3`;
+		current_title.textContent = `${song}`;
 	}
 
 	function nextSong() {
@@ -287,8 +289,7 @@ function play_music() {
 	volume_icon.addEventListener("click", volume_iconClick, false);
 
 	function volume_iconClick() {
-		// var value = volume.value
-		// console.log(value)
+		
 		if (!volume_icon.classList.contains('mute')) {
 			volume_icon.classList.add("mute")
 			audio.muted = true;
