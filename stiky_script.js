@@ -12,3 +12,5 @@ function myFunction() {
         player.classList.remove("sticky");
     }
 }
+
+

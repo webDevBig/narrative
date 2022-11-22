@@ -82,19 +82,22 @@ function create_player() {
 
 	// add btn's
 	// return_back
-	const return_back = document.createElement("div");
+	const return_back = document.createElement("button");
 	return_back.setAttribute("class", "return return_back");
 	return_back.setAttribute("id", "return_back")
+	// return_back.setAttribute("disabled", "true")
 
 	// play
-	const play_btn = document.createElement("div");
+	const play_btn = document.createElement("button");
 	play_btn.setAttribute("class", "play_btn toggle-play play");
 	play_btn.setAttribute("id", "playToggle")
+	// play_btn.setAttribute("disabled", "true")
 
 	// return_forward
-	const return_forward = document.createElement("div");
+	const return_forward = document.createElement("button");
 	return_forward.setAttribute("class", "return return_forward");
 	return_forward.setAttribute("id", "return_forward")
+	// return_forward.setAttribute("disabled", "true")
 
 	controler_box.append(speed, return_back, play_btn, return_forward)
 
@@ -158,32 +161,42 @@ function create_player() {
 function play_music() {
 	const audioPlayer = document.querySelector(".audio_player");
 	const current_title = document.querySelector('.current_title')
-	const audio = new Audio(
-		// "https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3"
-	);
+	const audio = new Audio();
+
+	const playBtn = document.querySelector("#playToggle");
+	var return_back = document.getElementById("return_back");
+	var return_forward = document.getElementById("return_forward");
 
 	const songs = [
-		'Juice WRLD Ft Benny Blanco - Real Shit',
-		'Lil Baby, Lil Durk ft Rodwave - Rich Off Pain',
-		'Polo G – I Know'
+		'https://www2.cs.uic.edu/~i101/SoundFiles/gettysburg10.wav',
+		'https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3'
 	];
-	let songIndex = 1;
+	
+	let songIndex = 0;
 	loadSong(songs[songIndex]);
 
 	function loadSong(song) {
-		audio.src = `music/${song}.mp3`;
-		current_title.textContent = `${song}`;
+		audio.src = `${song}`;
+		current_title.textContent = "TOP 10 BINGE-WORTHY SERIES " + `${songIndex}`;
 	}
 
 	function nextSong() {
 		songIndex++;
-
 		if (songIndex > songs.length - 1) {
 			songIndex = 0;
 		}
-
 		loadSong(songs[songIndex]);
 		audio.play();
+		if (songIndex == 1) {
+			console.log('n')
+			playBtn.disabled = false;
+			return_back.disabled = false;
+			return_forward.disabled = false;
+		} else {
+			playBtn.disabled = true;
+			return_back.disabled = true;
+			return_forward.disabled = true;
+		}
 	}
 	audio.addEventListener('ended', nextSong);
 
@@ -218,7 +231,7 @@ function play_music() {
 	}, 100);
 
 	//toggle between playing and pausing on button click
-	const playBtn = document.querySelector("#playToggle");
+
 	playBtn.addEventListener(
 		"click",
 		() => {
@@ -232,6 +245,16 @@ function play_music() {
 				playBtn.classList.remove("pause");
 				playBtn.classList.add("play");
 				audio.pause();
+			}
+			if (songIndex == 1) {
+				console.log('n')
+				playBtn.disabled = false;
+				return_back.disabled = false;
+				return_forward.disabled = false;
+			} else {
+				playBtn.disabled = true;
+				return_back.disabled = true;
+				return_forward.disabled = true;
 			}
 		},
 		false
@@ -250,7 +273,7 @@ function play_music() {
 		if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, 0)}`;
 		return `${String(hours).padStart(2, 0)}:${minutes}:${String(seconds % 60).padStart(2, 0)}`;
 	}
-	var return_forward = document.getElementById("return_forward");
+
 	return_forward.addEventListener("click", return_forwardClick, false);
 
 	function return_forwardClick() {
@@ -265,7 +288,7 @@ function play_music() {
 			audio.currentTime = timeToSeek;
 		}, false);
 	}
-	var return_back = document.getElementById("return_back");
+
 	return_back.addEventListener("click", return_backClick, false);
 
 	function return_backClick() {
