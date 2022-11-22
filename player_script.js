@@ -431,7 +431,7 @@ function stikyPlayer() {
 	};
 
 	var player = document.getElementById("player_here");
-	var sticky = player.offsetTop + 200;
+	var sticky = player.offsetTop + player.clientHeight + 70;
 
 	function myFunction() {
 		if (window.pageYOffset > sticky) {

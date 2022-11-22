@@ -880,6 +880,7 @@ header {
 
                 .player_box {
                     margin: 0 50px;
+                    background: transparent;
                 }
             }
         }
@@ -1002,9 +1003,10 @@ header {
             left: -33px;
         }
     }
-
+  
     #player_here {
         &.sticky {
+            height: 226px;
 
             .player_section {
                 height: 200px;
@@ -1056,17 +1058,33 @@ header {
                             font-weight: 500;
                             font-size: 20px;
                             line-height: 23px;
-                            background: linear-gradient(270deg, #4169E1 0%, rgba(65, 105, 225, 0) 99.99%, rgba(217, 217, 217, 0) 100%);
                         }
                     }
 
                     .player_box {
                         position: absolute;
-                        width: 100px;
-                        right: 13px;
+                        width: 60px;
+                        right: 50px;
                         margin: 0;
-                        background: rgb(65, 105, 225);
-                        background: linear-gradient(270deg, rgba(65, 105, 225, 1) 65%, rgba(65, 105, 225, 0.53687412464986) 86%, rgba(65, 105, 225, 0.06908700980392157) 95%);
+                        animation: bg .3s .1s ease-in;
+                        animation-fill-mode: forwards;
+                        transition: all .3s;
+
+                        & .controler_box {
+                            justify-content: flex-end;
+                        }
+                    }
+
+                    @keyframes bg {
+                        from {
+                            background: transparent;
+                        }
+
+                        to {
+                            background: rgb(65, 105, 225);
+                            background: linear-gradient(270deg, rgba(65, 105, 225, 1) 65%, rgba(65, 105, 225, 0.53687412464986) 86%, rgba(65, 105, 225, 0.06908700980392157) 95%);
+                        }
+
                     }
                 }
             }
@@ -1121,6 +1139,19 @@ header {
         }
     }
 
+    #player_here {
+        &.sticky {
+            .player_section {
+                &.resize {
+                    .info_box {
+                        .current_title {
+                            max-width: 84%;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
 

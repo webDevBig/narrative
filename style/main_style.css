@@ -732,6 +732,7 @@ header img {
   }
   #player_here.sticky .player_section .player_box {
     margin: 0 50px;
+    background: transparent;
   }
 }
 @media all and (max-width: 900px) {
@@ -815,6 +816,9 @@ header img {
   .speed .speedPop_Up {
     left: -33px;
   }
+  #player_here.sticky {
+    height: 226px;
+  }
   #player_here.sticky .player_section {
     height: 200px;
     padding: 16px 16px 20px;
@@ -859,15 +863,38 @@ header img {
     font-weight: 500;
     font-size: 20px;
     line-height: 23px;
-    background: linear-gradient(270deg, #4169E1 0%, rgba(65, 105, 225, 0) 99.99%, rgba(217, 217, 217, 0) 100%);
   }
   #player_here.sticky .player_section.resize .player_box {
     position: absolute;
-    width: 100px;
-    right: 13px;
+    width: 60px;
+    right: 50px;
     margin: 0;
-    background: rgb(65, 105, 225);
-    background: linear-gradient(270deg, rgb(65, 105, 225) 65%, rgba(65, 105, 225, 0.5368741246) 86%, rgba(65, 105, 225, 0.0690870098) 95%);
+    -webkit-animation: bg 0.3s 0.1s ease-in;
+            animation: bg 0.3s 0.1s ease-in;
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+    transition: all 0.3s;
+  }
+  #player_here.sticky .player_section.resize .player_box .controler_box {
+    justify-content: flex-end;
+  }
+  @-webkit-keyframes bg {
+    from {
+      background: transparent;
+    }
+    to {
+      background: rgb(65, 105, 225);
+      background: linear-gradient(270deg, rgb(65, 105, 225) 65%, rgba(65, 105, 225, 0.5368741246) 86%, rgba(65, 105, 225, 0.0690870098) 95%);
+    }
+  }
+  @keyframes bg {
+    from {
+      background: transparent;
+    }
+    to {
+      background: rgb(65, 105, 225);
+      background: linear-gradient(270deg, rgb(65, 105, 225) 65%, rgba(65, 105, 225, 0.5368741246) 86%, rgba(65, 105, 225, 0.0690870098) 95%);
+    }
   }
 }
 @media all and (max-width: 500px) {
@@ -901,5 +928,8 @@ header img {
     width: 100%;
     max-width: 100%;
     margin: 0 0 20px;
+  }
+  #player_here.sticky .player_section.resize .info_box .current_title {
+    max-width: 84%;
   }
 }/*# sourceMappingURL=main_style.css.map */
