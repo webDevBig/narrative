@@ -31,7 +31,7 @@ function create_player() {
 
 	const current_title = document.createElement("p");
 	current_title.setAttribute('class', 'current_title');
-	// current_title.textContent = "TOP 10 BINGE-WORTHY SERIES"
+
 
 	const volume_text = document.createElement("p");
 	volume_text.setAttribute('class', 'volume_text');
@@ -67,7 +67,7 @@ function create_player() {
 	const speed = document.createElement("div");
 	speed.setAttribute("class", "speed")
 
-	const speedValue = document.createElement("p");
+	const speedValue = document.createElement("button");
 	speedValue.setAttribute("class", "speedValue")
 	speedValue.setAttribute("id", "openSpeedPopUp")
 	speedValue.textContent = '1x';
@@ -187,6 +187,10 @@ function play_music() {
 	const playBtn = document.querySelector("#playToggle");
 	var return_back = document.getElementById("return_back");
 	var return_forward = document.getElementById("return_forward");
+	const speepPopUP = document.querySelector("#openSpeedPopUp");
+
+	const player_box = document.querySelector(".player_box");
+
 
 	const songs = [
 		'https://www2.cs.uic.edu/~i101/SoundFiles/gettysburg10.wav',
@@ -209,14 +213,17 @@ function play_music() {
 		loadSong(songs[songIndex]);
 		audio.play();
 		if (songIndex == 1) {
-			console.log('n')
 			playBtn.disabled = false;
 			return_back.disabled = false;
 			return_forward.disabled = false;
+			speepPopUP.disabled = false;
+			player_box.classList.remove('inActive')
 		} else {
 			playBtn.disabled = true;
 			return_back.disabled = true;
 			return_forward.disabled = true;
+			speepPopUP.disabled = true;
+			player_box.classList.add('inActive')
 		}
 	}
 	audio.addEventListener('ended', nextSong);
@@ -238,6 +245,11 @@ function play_music() {
 	//click on timeline to skip around
 	const timeline = audioPlayer.querySelector(".timeline");
 	timeline.addEventListener("click", e => {
+		const timelineWidth = window.getComputedStyle(timeline).width;
+		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
+		audio.currentTime = timeToSeek;
+	}, false);
+	timeline.addEventListener("touch", e => {
 		const timelineWidth = window.getComputedStyle(timeline).width;
 		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
 		audio.currentTime = timeToSeek;
@@ -274,10 +286,14 @@ function play_music() {
 				playBtn.disabled = false;
 				return_back.disabled = false;
 				return_forward.disabled = false;
+				speepPopUP.disabled = false;
+				player_box.classList.remove('inActive')
 			} else {
 				playBtn.disabled = true;
 				return_back.disabled = true;
 				return_forward.disabled = true;
+				speepPopUP.disabled = true;
+				player_box.classList.add('inActive')
 			}
 		},
 		false
@@ -380,8 +396,7 @@ function play_music() {
 
 
 
-	const speepPopUP = document.querySelector("#openSpeedPopUp");
-
+	
 
 	speepPopUP.addEventListener("click", speepPopUPClick, false);
 
