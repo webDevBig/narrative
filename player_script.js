@@ -27,7 +27,7 @@ function create_player() {
 	}
 
 	img.appendChild(musicBar_animation)
-	
+
 
 	const current_title = document.createElement("p");
 	current_title.setAttribute('class', 'current_title');
@@ -249,11 +249,6 @@ function play_music() {
 		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
 		audio.currentTime = timeToSeek;
 	}, false);
-	timeline.addEventListener("touch", e => {
-		const timelineWidth = window.getComputedStyle(timeline).width;
-		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
-		audio.currentTime = timeToSeek;
-	}, false);
 
 
 	//check audio percentage and update time accordingly
@@ -351,18 +346,19 @@ function play_music() {
 
 
 	volume_icon.addEventListener("click", volume_iconClick, false);
-
+	var someVarName = volume.value;
 	function volume_iconClick() {
-
+		
 		if (!volume_icon.classList.contains('mute')) {
 			volume_icon.classList.add("mute")
 			audio.muted = true;
 			volume.classList.add('mute')
+			volume.value = volume.min
 		} else {
-
 			volume_icon.classList.remove("mute")
 			volume.classList.remove('mute')
-			audio.muted = false
+			audio.muted = false;
+			volume.value = someVarName;
 		}
 	}
 	volume.addEventListener("change", () => {
@@ -394,9 +390,6 @@ function play_music() {
 
 	rangeInputs.addEventListener("input", handleInputChange);
 
-
-
-	
 
 	speepPopUP.addEventListener("click", speepPopUPClick, false);
 

@@ -363,6 +363,7 @@ header img {
 }
 .controler_box .play_btn.pause {
   background-image: url("../img/pause.svg");
+  background-size: 16px;
 }
 .controler_box .play_btn:hover, .controler_box .play_btn:disabled {
   background-color: #5B88FF;
@@ -374,7 +375,7 @@ header img {
   background-image: url("../img/return.svg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100%;
   border: none;
   outline: none;
   cursor: pointer;
@@ -382,10 +383,11 @@ header img {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.2s;
+  transition: color 0.2s;
 }
 .controler_box .return:hover, .controler_box .return:disabled {
   background-image: url("../img/return-hover.svg");
+  background-size: 100%;
 }
 .controler_box .return::after {
   content: "15";
@@ -423,7 +425,6 @@ header img {
   background-position: 0% 50%;
   background-repeat: no-repeat;
   background-size: 20px;
-  transition: all 0.2s;
 }
 .volume .volume_icon.mute {
   background-image: url("../img/mute.svg");

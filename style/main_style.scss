@@ -400,6 +400,7 @@ header {
 
         &.pause {
             background-image: url("../img/pause.svg");
+            background-size: 16px;
         }
 
         &:hover,
@@ -415,7 +416,7 @@ header {
         background-image: url('../img/return.svg');
         background-position: center;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 100%;
         border: none;
         outline: none;
         cursor: pointer;
@@ -423,11 +424,12 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: all .2s;
+        transition: color .2s;
 
         &:hover,
         &:disabled {
             background-image: url('../img/return-hover.svg');
+            background-size: 100%;
         }
 
         &::after {
@@ -472,7 +474,7 @@ header {
         background-position: 0% 50%;
         background-repeat: no-repeat;
         background-size: 20px;
-        transition: all .2s;
+        // transition: all .2s;
 
         &.mute {
             background-image: url("../img/mute.svg");
@@ -829,6 +831,7 @@ header {
     }
 
 }
+
 
 
 
