@@ -196,9 +196,14 @@ header {
         align-items: center;
         justify-content: flex-start;
 
-        img {
-            max-width: 80px;
+        .current_photo {
+            width: 80px;
+            height: 80px;
+            background-image: url('../img/img.png');
+            background-position: center;
+            background-size: cover;
             margin: 0 16px 0 0;
+            position: relative;
         }
 
         .current_title {
@@ -236,6 +241,72 @@ header {
         }
     }
 
+}
+
+.musicBar_animation {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(0deg, rgba(64, 64, 64, 0.4), rgba(64, 64, 64, 0.4));
+    border-radius: 8px;
+
+    &.play {
+        span {
+            animation: pulse 1s linear infinite;
+        }
+
+    }
+
+    span {
+        background: #FDFDFD;
+        border-radius: 46.1538px;
+        width: 3px;
+        height: 4px;
+        margin: 0 1.5px;
+        display: block;
+        position: relative;
+        transition: all 1s;
+
+        &:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        &:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        &:nth-child(4) {
+            animation-delay: 0.9s;
+        }
+
+        &:nth-child(5) {
+            animation-delay: 0.6s;
+        }
+
+        &:nth-child(6) {
+            animation-delay: 0.3s;
+        }
+
+        &:nth-child(7) {
+            animation-delay: 0s;
+        }
+    }
+}
+
+@keyframes pulse {
+    50% {
+        height: 17px;
+    }
+
+    100% {
+        height: 4px;
+    }
 }
 
 .speed {
@@ -312,7 +383,8 @@ header {
             background-image: url("../img/pause.svg");
         }
 
-        &:hover {
+        &:hover,
+        &:disabled {
             background-color: #5B88FF;
         }
     }
@@ -334,7 +406,8 @@ header {
         align-items: center;
         transition: all .2s;
 
-        &:hover {
+        &:hover,
+        &:disabled {
             background-image: url('../img/return-hover.svg');
         }
 
@@ -349,7 +422,8 @@ header {
             transition: all .2s;
         }
 
-        &:hover::after {
+        &:hover::after,
+        &:disabled::after {
             color: $--narrativ-color-text-hover;
         }
 
@@ -951,7 +1025,7 @@ header {
                     .play_btn {
                         width: 27px;
                         height: 27px;
-                        background-size: 10px;
+                        background-size: 8px;
                         margin: 0;
                     }
 
@@ -971,9 +1045,11 @@ header {
 
                     .player_box {
                         position: absolute;
-                        width: auto;
-                        right: 50px;
+                        width: 100px;
+                        right: 13px;
                         margin: 0;
+                        background: rgb(65, 105, 225);
+                        background: linear-gradient(270deg, rgba(65, 105, 225, 1) 65%, rgba(65, 105, 225, 0.53687412464986) 86%, rgba(65, 105, 225, 0.06908700980392157) 95%);
                     }
                 }
             }

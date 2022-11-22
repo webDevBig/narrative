@@ -1,5 +1,7 @@
 function create_player() {
-	const player_container = document.getElementById("player_here");
+	const player_container = document.createElement("div");
+	player_container.setAttribute('id', "player_here")
+
 	const player_section = document.createElement("div");
 	player_section.setAttribute('class', 'player_section')
 
@@ -11,10 +13,21 @@ function create_player() {
 	const title_box = document.createElement("div");
 	title_box.setAttribute('class', 'title_box');
 
-	const img = document.createElement("img");
+	const img = document.createElement("div");
 	img.setAttribute('class', 'current_photo');
-	img.setAttribute('src', 'img/Current-Playing-Photo.png');
-	img.setAttribute('alt', 'current playing photo');
+
+	// create music bar animation
+	const musicBar_animation = document.createElement("div");
+	musicBar_animation.setAttribute('class', 'musicBar_animation');
+
+	for (var i = 0; i <= 7; i++) {
+		const musicBar_item = document.createElement("span");
+		musicBar_item.setAttribute("class", "musicBar_item")
+		musicBar_animation.append(musicBar_item)
+	}
+
+	img.appendChild(musicBar_animation)
+	
 
 	const current_title = document.createElement("p");
 	current_title.setAttribute('class', 'current_title');
@@ -155,12 +168,20 @@ function create_player() {
 	player_section.append(title_box, player_box, volume_box, arrow)
 
 	player_container.append(player_section)
+
+	const article_title_box = document.getElementById('article_title_box')
+
+	function insertAfter(newNode, existingNode) {
+		existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+	}
+	insertAfter(player_container, article_title_box);
 }
 
 
 function play_music() {
 	const audioPlayer = document.querySelector(".audio_player");
-	const current_title = document.querySelector('.current_title')
+	const current_title = document.querySelector('.current_title');
+	const musicBar_animation = document.querySelector('.musicBar_animation')
 	const audio = new Audio();
 
 	const playBtn = document.querySelector("#playToggle");
@@ -171,7 +192,7 @@ function play_music() {
 		'https://www2.cs.uic.edu/~i101/SoundFiles/gettysburg10.wav',
 		'https://narrativ-audio-bucket.s3.amazonaws.com/930157e4-995a-42de-af4b-8c30ab58f42d/fcf6c846-a10b-473b-9745-f475137aab25-nina.mp3'
 	];
-	
+
 	let songIndex = 0;
 	loadSong(songs[songIndex]);
 
@@ -240,10 +261,12 @@ function play_music() {
 			if (audio.paused) {
 				playBtn.classList.remove("play");
 				playBtn.classList.add("pause");
+				musicBar_animation.classList.add('play')
 				audio.play();
 			} else {
 				playBtn.classList.remove("pause");
 				playBtn.classList.add("play");
+				musicBar_animation.classList.remove('play')
 				audio.pause();
 			}
 			if (songIndex == 1) {
@@ -394,5 +417,24 @@ function play_music() {
 
 }
 
+function stikyPlayer() {
+	window.onscroll = function () {
+		myFunction()
+	};
+
+	var player = document.getElementById("player_here");
+	var sticky = player.offsetTop + 200;
+
+	function myFunction() {
+		if (window.pageYOffset > sticky) {
+			player.classList.add("sticky");
+		} else {
+			player.classList.remove("sticky");
+		}
+	}
+}
+
+
 const timeoutObject = setTimeout(create_player, 1000);
 const timeoutMusic = setTimeout(play_music, 1000);
+const timeoutStiky = setTimeout(stikyPlayer, 1000);
