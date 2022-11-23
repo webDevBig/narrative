@@ -13,6 +13,7 @@ function create_player() {
 	const title_box = document.createElement("div");
 	title_box.setAttribute('class', 'title_box');
 
+	// add song img
 	const img = document.createElement("div");
 	img.setAttribute('class', 'current_photo');
 
@@ -28,11 +29,11 @@ function create_player() {
 
 	img.appendChild(musicBar_animation)
 
-
+	// add track name
 	const current_title = document.createElement("p");
 	current_title.setAttribute('class', 'current_title');
 
-
+	// add title under volume
 	const volume_text = document.createElement("p");
 	volume_text.setAttribute('class', 'volume_text');
 	const volume_textM = document.createElement("p");
@@ -64,6 +65,7 @@ function create_player() {
 	const controler_box = document.createElement("div");
 	controler_box.setAttribute("class", "controler_box");
 
+	// add speed section with pop up
 	const speed = document.createElement("div");
 	speed.setAttribute("class", "speed")
 
@@ -89,28 +91,21 @@ function create_player() {
 	speed.append(speedValue, speedPop_Up)
 
 
-
-
-	// speedPop_Up.append(speedValueItem)
-
 	// add btn's
 	// return_back
 	const return_back = document.createElement("button");
 	return_back.setAttribute("class", "return return_back");
 	return_back.setAttribute("id", "return_back")
-	// return_back.setAttribute("disabled", "true")
 
 	// play
 	const play_btn = document.createElement("button");
 	play_btn.setAttribute("class", "play_btn toggle-play play");
 	play_btn.setAttribute("id", "playToggle")
-	// play_btn.setAttribute("disabled", "true")
 
 	// return_forward
 	const return_forward = document.createElement("button");
 	return_forward.setAttribute("class", "return return_forward");
 	return_forward.setAttribute("id", "return_forward")
-	// return_forward.setAttribute("disabled", "true")
 
 	controler_box.append(speed, return_back, play_btn, return_forward)
 
@@ -125,10 +120,12 @@ function create_player() {
 	audio.setAttribute("id", "audio");
 	audio.setAttribute("autoplay", "true");
 
+	// add duration time of track
 	const durationTime = document.createElement("span");
 	durationTime.setAttribute("id", "durationTime")
 	durationTime.setAttribute("class", "current")
 
+	// add current time for track
 	const currentTime = document.createElement("span");
 	currentTime.setAttribute("id", "currentTime")
 	currentTime.setAttribute("class", "current")
@@ -169,12 +166,16 @@ function create_player() {
 
 	player_container.append(player_section)
 
+	// insert player section
 	const article_title_box = document.getElementById('article_title_box')
 
 	function insertAfter(newNode, existingNode) {
 		existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 	}
+
 	insertAfter(player_container, article_title_box);
+
+
 }
 
 
@@ -346,19 +347,24 @@ function play_music() {
 
 
 	volume_icon.addEventListener("click", volume_iconClick, false);
-	var someVarName = volume.value;
+	
+	let muteState = 'unmute';
+	var currentVolume = 1;
 	function volume_iconClick() {
-		
-		if (!volume_icon.classList.contains('mute')) {
-			volume_icon.classList.add("mute")
+		if(muteState === 'unmute') {
+			currentVolume = volume.value;
+			volume.value = 0;
 			audio.muted = true;
+			muteState = 'mute';
+			volume_icon.classList.add("mute")
 			volume.classList.add('mute')
-			volume.value = volume.min
-		} else {
+		}
+		else{
 			volume_icon.classList.remove("mute")
 			volume.classList.remove('mute')
+			volume.value = currentVolume;
 			audio.muted = false;
-			volume.value = someVarName;
+			muteState = 'unmute';
 		}
 	}
 	volume.addEventListener("change", () => {

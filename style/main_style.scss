@@ -20,13 +20,32 @@ $--narrativ-font-size:12px;
     box-sizing: border-box;
 }
 
+@keyframes fadeInOut {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    50% {
+        height: 17px;
+    }
+
+    100% {
+        height: 4px;
+    }
+}
+
 @mixin contentView() {
     display: flex;
     width: 100%;
     max-width: 1184px;
     margin: 0 auto;
 }
-
 
 body {
     color: $body-text-color;
@@ -55,6 +74,24 @@ header {
 
     img {
         max-width: 100%;
+    }
+
+    .nav {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        span {
+            width: 100%;
+            height: 3px;
+            background-color: black;
+            border-radius: 20px;
+            margin: 1px 0;
+        }
     }
 }
 
@@ -86,26 +123,12 @@ header {
     margin: 0 auto 24px;
 }
 
-
-
 .main_img {
     @include contentView();
     margin: 64px auto 0;
 }
 
-
-@keyframes fadeInOut {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-
-
+// style for article
 .article_box {
     @include contentView();
     flex-direction: column;
@@ -170,6 +193,95 @@ header {
     }
 }
 
+// style for social media in mobile
+.social_box {
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+    border-top: 1px solid #EBEBEB;
+    padding: 24px 0;
+    margin: 24px 0 0;
+
+    img {
+        max-width: 35px;
+        margin: 0 12px;
+        cursor: pointer;
+    }
+
+    .comment_box {
+        margin: 0 12px;
+        padding: 1px 15px;
+        border: 1px solid #BDBDBD;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 33px;
+        text-align: center;
+        color: #BDBDBD;
+        font-family: $font-family1, sans-serif;
+        cursor: default;
+    }
+}
+
+// style for title section in mobile
+.title_section {
+    padding: 24px 0 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-family: $font-family1, sans-serif;
+
+    h6 {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+        color: #333333;
+        width: 100%;
+    }
+
+    .note {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+        color: #999999;
+        margin-top: 16px;
+    }
+
+    .title {
+        color: #7B1B18;
+        font-weight: 500;
+        font-size: 38px;
+        line-height: 45px;
+        margin: 8px 0;
+    }
+
+    .autor {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+        color: #2E2E2E;
+
+        span {
+            font-size: 14px;
+            color: #7B1B18;
+        }
+    }
+
+    .date_box {
+        display: flex;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: #999999;
+        margin: 3px 0 24px;
+    }
+
+}
+
+// style for player section. main
 .player_section {
     @include contentView();
     background: #F5F5F5;
@@ -234,6 +346,7 @@ header {
         font-size: 16px;
         line-height: 19px;
         color: #999999;
+        cursor: default;
 
         img {
             max-width: 65px;
@@ -243,6 +356,7 @@ header {
 
 }
 
+// style for animation when music sound
 .musicBar_animation {
     width: 80px;
     height: 80px;
@@ -299,16 +413,7 @@ header {
     }
 }
 
-@keyframes pulse {
-    50% {
-        height: 17px;
-    }
-
-    100% {
-        height: 4px;
-    }
-}
-
+// style for speed pop Up
 .speed {
     position: absolute;
     left: 0;
@@ -357,6 +462,7 @@ header {
 
 }
 
+// when post roll play
 .player_box {
     &.inActive {
         position: relative;
@@ -375,6 +481,7 @@ header {
 
 }
 
+// style for conroler section with button
 .controler_box {
     width: 100%;
     display: flex;
@@ -459,7 +566,7 @@ header {
 
 }
 
-
+// style for volume section
 .volume {
     margin: 0 0 20px;
     display: flex;
@@ -602,6 +709,72 @@ header {
 
 }
 
+
+// style for audio player
+.audio_player {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #currentTime,
+    #durationTime {
+        font-weight: 500;
+        font-size: $--narrativ-font-size;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        color: $--narrativ-color-text;
+        font-family: $--narrativ-font-family, sans-serif;
+        min-width: 30px;
+        cursor: default;
+    }
+
+    .timeline {
+        background: $--narrativ-color-fill;
+        width: 446px;
+        height: 4px;
+        position: relative;
+        cursor: pointer;
+        margin: 0 8px;
+        border-radius: 16px;
+
+        &:hover {
+            .progress {
+                background: $--narrativ-color-progress-hover;
+
+                &::after {
+                    background-color: $--narrativ-color-progress-hover;
+                }
+            }
+        }
+
+
+        .progress {
+            background: $--narrativ-color-progress;
+            width: 0%;
+            height: 100%;
+            transition: 0.25s;
+            position: relative;
+            border-radius: 16px 0 0 16px;
+
+            &::after {
+                content: "";
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: $--narrativ-color-progress;
+                position: absolute;
+                right: -5px;
+                top: -4px;
+            }
+        }
+    }
+
+}
+
+
+// style for player when scroll and fixed it
 #player_here {
     &.sticky {
         height: 127px;
@@ -770,70 +943,9 @@ header {
     }
 }
 
-.audio_player {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    #currentTime,
-    #durationTime {
-        font-weight: 500;
-        font-size: $--narrativ-font-size;
-        line-height: 14px;
-        display: flex;
-        align-items: center;
-        color: $--narrativ-color-text;
-        font-family: $--narrativ-font-family, sans-serif;
-        min-width: 30px;
-        cursor: default;
-    }
-
-    .timeline {
-        background: $--narrativ-color-fill;
-        width: 446px;
-        height: 4px;
-        position: relative;
-        cursor: pointer;
-        margin: 0 8px;
-        border-radius: 16px;
-
-        &:hover {
-            .progress {
-                background: $--narrativ-color-progress-hover;
-
-                &::after {
-                    background-color: $--narrativ-color-progress-hover;
-                }
-            }
-        }
-
-
-        .progress {
-            background: $--narrativ-color-progress;
-            width: 0%;
-            height: 100%;
-            transition: 0.25s;
-            position: relative;
-            border-radius: 16px 0 0 16px;
-
-            &::after {
-                content: "";
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background-color: $--narrativ-color-progress;
-                position: absolute;
-                right: -5px;
-                top: -4px;
-            }
-        }
-    }
-
+.mobile {
+    display: none;
 }
-
-
-
 
 @media all and (max-width:1200px) {
     @mixin contentView() {
@@ -890,9 +1002,46 @@ header {
 
 }
 
+
 @media all and (max-width:900px) {
     @mixin contentView() {
         max-width: 600px;
+    }
+
+    header {
+        box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.05);
+        padding: 24px 0;
+
+        .content {
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav {
+            position: absolute;
+            left: 0;
+        }
+
+        img {
+            display: none;
+        }
+    }
+
+    .main_img,
+    .article_box,
+    .date_box,
+    #article_title_box {
+        display: none;
+    }
+
+    body {
+        padding: 0 0 250px;
+        background: #F5F5F5;
+    }
+
+    .mobile {
+        display: flex;
     }
 
     .content,
@@ -904,7 +1053,16 @@ header {
         @include contentView();
     }
 
+    .title_section {
+        @include contentView();
+        display: flex;
+        margin: 0 auto;
+    }
+
+
     .article_box {
+        margin-top: 24px;
+
         .row {
             flex-wrap: wrap-reverse;
         }
@@ -922,6 +1080,7 @@ header {
 
     .player_section {
         flex-direction: column;
+        border-radius: 8px;
 
 
         .title_box {
@@ -1003,7 +1162,7 @@ header {
             left: -33px;
         }
     }
-  
+
     #player_here {
         &.sticky {
             height: 226px;
@@ -1099,11 +1258,20 @@ header {
     }
 
     .content,
-    .date_box,
-    .title,
     .player_section,
-    .main_img,
     .article_box {
+        @include contentView();
+    }
+
+    header {
+        margin: 0 0 24px;
+
+        .nav {
+            left: 24px;
+        }
+    }
+
+    .title_section {
         @include contentView();
     }
 
@@ -1154,5 +1322,14 @@ header {
     }
 
 
+
+}
+
+@media all and (max-width:330px) {
+    header {
+        .content {
+            padding: 0 24px 0 48px;
+        }
+    }
 
 }
