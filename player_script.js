@@ -248,7 +248,25 @@ function play_music() {
 	timeline.addEventListener("click", e => {
 		const timelineWidth = window.getComputedStyle(timeline).width;
 		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
+		console.log(timeToSeek)
 		audio.currentTime = timeToSeek;
+	}, false);
+
+	timeline.addEventListener('touchmove', e => {
+		// const timelineWidth = window.getComputedStyle(timeline).width;
+		const timelineWidth = window.getComputedStyle(timeline).width;
+		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
+		console.log(timeToSeek)
+		audio.currentTime = timeToSeek;
+
+		if (isDragging)
+        {
+            var difference = e.originalEvent.targetTouches[0].pageX - oldXPos;
+			audio.currentTime = difference;
+            // $('#changeMe').css({width: '+='+ difference});
+			// progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
+        }
+		
 	}, false);
 
 
@@ -258,6 +276,7 @@ function play_music() {
 		progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
 		document.querySelector("#currentTime").textContent = "-" + getTimeCodeFromNum(audio.duration - audio.currentTime);
 	}, 100);
+	
 
 	//toggle between playing and pausing on button click
 
