@@ -252,22 +252,23 @@ function play_music() {
 		audio.currentTime = timeToSeek;
 	}, false);
 
-	timeline.addEventListener('touchmove', e => {
-		// const timelineWidth = window.getComputedStyle(timeline).width;
-		const timelineWidth = window.getComputedStyle(timeline).width;
-		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
-		console.log(timeToSeek)
-		audio.currentTime = timeToSeek;
-
-		if (isDragging)
+	$(document).bind('touchmove' ,function(event) {
+        if (isDragging)
         {
-            var difference = e.originalEvent.targetTouches[0].pageX - oldXPos;
-			audio.currentTime = difference;
-            // $('#changeMe').css({width: '+='+ difference});
-			// progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
+            var difference = event.originalEvent.targetTouches[0].pageX - oldXPos;
+            $('.timeline').css({width: '+='+ difference});
         }
-		
-	}, false);
+        oldXPos = event.originalEvent.targetTouches[0].pageX;
+        $('.timeline').bind('touchstart', function(){isDragging = true;})
+        $('.timeline').bind('touchend', function(){isDragging = false;})
+});
+
+$(document).ready(function(){
+     $('.timeline').bind('touchstart', function(event){
+        oldXPos = event.originalEvent.targetTouches[0].pageX;
+            $('body').bind('touchmove', function(e){e.preventDefault()});
+     });
+});
 
 
 	//check audio percentage and update time accordingly
