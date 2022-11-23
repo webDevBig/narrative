@@ -245,6 +245,7 @@ function play_music() {
 
 	//click on timeline to skip around
 	const timeline = audioPlayer.querySelector(".timeline");
+
 	timeline.addEventListener("click", e => {
 		const timelineWidth = window.getComputedStyle(timeline).width;
 		const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
@@ -252,23 +253,16 @@ function play_music() {
 		audio.currentTime = timeToSeek;
 	}, false);
 
-	$(document).bind('touchmove' ,function(event) {
-        if (isDragging)
-        {
-            var difference = event.originalEvent.targetTouches[0].pageX - oldXPos;
-            $('.timeline').css({width: '+='+ difference});
-        }
-        oldXPos = event.originalEvent.targetTouches[0].pageX;
-        $('.timeline').bind('touchstart', function(){isDragging = true;})
-        $('.timeline').bind('touchend', function(){isDragging = false;})
-});
+	// Set progress bar
+	function setProgress(e) {
+		const width = this.clientWidth;
+		const clickX = e.offsetX;
+		const duration = audio.duration;
 
-$(document).ready(function(){
-     $('.timeline').bind('touchstart', function(event){
-        oldXPos = event.originalEvent.targetTouches[0].pageX;
-            $('body').bind('touchmove', function(e){e.preventDefault()});
-     });
-});
+		audio.currentTime = (clickX / width) * duration;
+	}
+	timeline.addEventListener('touchmove', setProgress);
+
 
 
 	//check audio percentage and update time accordingly
@@ -277,7 +271,7 @@ $(document).ready(function(){
 		progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
 		document.querySelector("#currentTime").textContent = "-" + getTimeCodeFromNum(audio.duration - audio.currentTime);
 	}, 100);
-	
+
 
 	//toggle between playing and pausing on button click
 
@@ -367,19 +361,19 @@ $(document).ready(function(){
 
 
 	volume_icon.addEventListener("click", volume_iconClick, false);
-	
+
 	let muteState = 'unmute';
 	var currentVolume = 1;
+
 	function volume_iconClick() {
-		if(muteState === 'unmute') {
+		if (muteState === 'unmute') {
 			currentVolume = volume.value;
 			volume.value = 0;
 			audio.muted = true;
 			muteState = 'mute';
 			volume_icon.classList.add("mute")
 			volume.classList.add('mute')
-		}
-		else{
+		} else {
 			volume_icon.classList.remove("mute")
 			volume.classList.remove('mute')
 			volume.value = currentVolume;
